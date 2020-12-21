@@ -1,0 +1,80 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,force:appHostable" access="global" controller="AppointmentController">
+    
+    <aura:attribute name="isOpen" type="Boolean" default="false"/>
+    <aura:attribute name="appointment" type="Appointment__c" default="{'sObjectType':'Appointment__c'}"/>
+    <aura:attribute name="contact" type="Contact"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <div class="slds-m-around_xx-large">
+        <aura:if isTrue="{!v.isOpen}">   
+            <!-- Modal dialog box-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container slds-scrollable">
+                    <!-- header of modal -->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{!c.closeModal}"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Enter Appointment Details</h2>
+                    </header>
+                    <!-- body of modal -->
+                    
+                    <lightning:recordEditForm aura:id = "appForm"
+                                              objectApiName="Appointment__c"
+                                              onsubmit="{!c.confirmAppointment}">
+                        <div class="slds-modal__content slds-p-around_large" id="modal-content-id-1">
+                            
+                            <div class="slds-grid slds-wrap slds-p-horizontal--large">
+                                <div class="slds-col slds-small-size_1-of-1 slds-p-top_small">
+                                    <lightning:inputField aura:id="doctorField" fieldName="Doctors_Name__c" value="{!v.appointment.Doctors_Name__c}" disabled="true"/> 
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-wrap slds-p-horizontal--large">
+                                <div class="slds-col slds-medium-size_2-of-3 slds-p-top--xx-small">
+                                    <lightning:inputField aura:id="contactField" fieldName="Appointment_Date__c"  value="{!v.appointment.Appointment_Date__c}"/>
+                                </div>
+                                <div class="slds-col slds-medium-size_1-of-3 slds-p-top_large">
+                                    <lightning:inputField aura:id="contactField" fieldName="Gender__c" value="{!v.appointment.Gender__c}"/>
+                                </div>
+                            </div> 
+                            <div class="slds-grid slds-wrap slds-p-horizontal--large">
+                                <div class="slds-col slds-medium-size_1-of-2 slds-p-top_small">
+                                    <lightning:inputField aura:id="contactField"  fieldName="First_Name__c" value="{!v.appointment.First_Name__c}"/> 
+                                </div>
+                                <div class="slds-col slds-medium-size_1-of-2 slds-p-top_small">
+                                    <lightning:inputField aura:id="contactField"  fieldName="Last_Name__c" value="{!v.appointment.Last_Name__c}"/>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-wrap slds-p-horizontal--large">                                         
+                                
+                                <div class="slds-col slds-medium-size_1-of-2 slds-top-small">
+                                    <lightning:inputField aura:id="contactField" fieldName="Phone__c" value="{!v.appointment.Phone__c}"/>
+                                </div>
+                                <div class="slds-col slds-medium-size_1-of-2 slds-p-top--xx_small">
+                                    <lightning:inputField aura:id="contactField" fieldName="Email__c" value="{!v.appointment.Email__c}"/>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-wrap slds-size_1-of-1 slds-p-horizontal--large">
+                                
+                            </div>
+                        </div>  
+                        <!--modal footer-->
+                        <footer class="slds-modal__footer">
+                            <lightning:button variant="neutral" 
+                                              label="Cancel"  
+                                              onclick="{!c.closeModal}"/>
+                            <lightning:button type="submit"
+                                              variant="brand" 
+                                              label="Confirm Appointment"/>
+                        </footer>
+                    </lightning:recordEditForm>
+                </div>
+            </section>
+            
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+    </div>
+    
+</aura:component>

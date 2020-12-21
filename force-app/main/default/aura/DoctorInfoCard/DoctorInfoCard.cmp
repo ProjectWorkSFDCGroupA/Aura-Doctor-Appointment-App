@@ -1,0 +1,31 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    
+    <aura:attribute name="contact" type="Contact" default="{'sObjectType':'Contact'}"/>
+    <aura:registerEvent name="bookNowEvent" type="c:ContactEvent"/>
+    <aura:attribute name="recordId" type="String"/>
+    
+    <lightning:card >
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-medium-size_2-of-12 ">
+                <div class="slds-clearfix slds-p-around_small">
+                    <div class="">
+                        <img src="{!v.contact.Picture_URL__c}" class="avatarCustom"/>
+                    </div>
+                </div>
+            </div>           
+            <div class="slds-col slds-medium-size_6-of-12 ">
+                <a onclick="{!c.navigate}"><h3 class="slds-text-heading_small slds-m-bottom_xx-small">{!v.contact.Name}</h3></a>
+                <p>{!v.contact.Department}</p>
+                <p>{!v.contact.Years_Of_Experience__c} years of Experience</p>
+                <br/>
+                <span>{!v.contact.MailingStreet}, {!v.contact.MailingCity}, {!v.contact.MailingCountry}</span>
+                <p>Consults at <strong>{!v.contact.Account.Name}</strong></p>
+                <p>Consultancy Fees <strong>${!v.contact.Consultation_Fees__c}</strong></p>
+            </div>
+            <div class="slds-col slds-m-top_large slds-medium-size_4-of-12 slds-align_absolute-center slds-clearfix">
+                <lightning:overlayLibrary aura:id="overlayLib"/>
+                <lightning:button label="Book Appointment" iconName="utility:date_input" class="slds-float--left button-card" onclick="{!c.fireBookNowEvent}"/>
+            </div>
+        </div>
+    </lightning:card>
+</aura:component>

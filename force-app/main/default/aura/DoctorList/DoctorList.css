@@ -1,0 +1,52 @@
+.THIS {
+}
+.THIS .scrollable {
+    height: 400px;
+    overflow-y:auto;
+}
+
+.THIS .slds-card{
+    border: none;
+}
+.THIS .headerCls{
+    background-color: #434ea2!important;
+    border-radius: 0rem!important;
+}
+.THIS .filterbox{
+    
+    margin: 10px;
+    padding: 5px 10px;
+    background-color: #5260c4!important;
+    min-height: 40px;
+    border-radius: 0.3rem;
+}
+.THIS .whitelabel{
+    color: white!important;
+}
+.THIS .lightbluelabel{
+    color: #ffffff!important;
+    white-space: nowrap;
+    background-color: #434ea2!important;
+    padding: 5px;
+ 	border : 1px solid white!important;
+    border-radius: 0.3rem;
+}
+.THIS .slds-select{
+    background-color: #434ea2!important;
+    color: white!important;
+    width: 140px;
+}
+.THIS .label-hidden> label{
+    display:none;
+}
+
+.THIS .borderBox{
+    border-style: solid!important;
+    border-width: 8px!important;
+    border-radius: 0.4rem!important;
+    border-color: #5260c4!important;
+}
+
+.THIS .flexBox{
+    display:flex;
+}

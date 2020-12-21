@@ -1,0 +1,106 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global" controller="DoctorController" >
+    
+    <aura:attribute name="videoConsultation" type="Boolean" default="false"/>
+    <aura:attribute name="selectedAvailability" type="String"/>
+    <aura:attribute name="selectedGender" type="String"/>
+    <aura:attribute name="selectedSort" type="String"/>
+    <aura:attribute name="selectedFees" type="String" />
+    <aura:attribute name="contacts" type="Contact[]"/>
+    
+    
+    <aura:attribute name="selectedContact" type="Contact" default="{'sObjectType':'Contact'}"/>
+    <aura:handler name="bookNowEvent" event="c:ContactEvent" action="{!c.handleBookNowEvent}"/>
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    
+    <!-- Filter-->
+    
+    <div class="stickyheader">
+        <div class="slds-card headerCls">
+            <form>
+                <div class="slds-grid slds-wrap slds-p-horizontal_large">
+                    <div class="slds-col slds-align_absolute-center slds-size_1-of-2 slds-medium-size_2-of-6  slds-large-size--1-of-6">
+                        <div class="filterbox flexBox slds-align-middle slds-m-around_small">
+                            <lightning:input type="checkbox" class="slds-p-top_xx-small "
+                                             checked="{!v.videoConsultation}"
+                                             onchange="{!c.onChange}"/>
+                            <label class="whitelabel slds-p-top_xx-small">Video Consult</label>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-align_absolute-center slds-size_1-of-2 slds-medium-size_2-of-6  slds-large-size--1-of-6">
+                        <div class=" slds-m-around_small">
+                            <lightning:select aura:id="select-01" class="label-hidden borderBox" label="" onchange="{! c.onChange }" value="{!v.selectedAvailability}">
+                                <option value="%">Availability</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </lightning:select>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-align_absolute-center slds-size_1-of-2 slds-medium-size_2-of-6  slds-large-size--1-of-6">
+                        <div class="slds-m-around_small">
+                            <lightning:select class="label-hidden borderBox" label="" onchange="{! c.onChange }" value="{!v.selectedGender}">
+                                <option value="%">All Genders</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </lightning:select>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-align_absolute-center slds-size_1-of-2 slds-medium-size_2-of-6  slds-large-size--1-of-6">
+                        <div class="slds-m-around_small">
+                            <lightning:select class="label-hidden borderBox" label="" onchange="{! c.onChange }" value="{!v.selectedFees}">
+                                <option value="">Consultation Fee</option>
+                                <option value="stage0">Free Consultation</option>
+                                <option value="stage1">$1  -  $200</option>
+                                <option value="stage2">$201  -  $500</option>
+                                <option value="stage3">$500 +</option>
+                            </lightning:select>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-align_absolute-center slds-size_1-of-3 slds-medium-size_2-of-6  slds-large-size--1-of-12">
+                        <div class="slds-m-around_small slds-align-middle">
+                            <button class="lightbluelabel">Reset Filter</button>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-align_absolute-center slds-size_2-of-3 slds-medium-size_2-of-12  slds-large-size--3-of-12">
+                        <div class="slds-m-around_small flexBox">
+                            <label class="whitelabel slds-p-top_small">Sort By &nbsp; &nbsp;</label>
+                            
+                            <lightning:select class="label-hidden borderBox" label="" onchange="{! c.onChange }" value="{!v.selectedSort}">
+                                <option value="">Relevance</option>
+                                <option value="lowToHigh">Price - Low to High</option>
+                                <option value="highToLow">Price - High to Low</option>
+                            </lightning:select>
+                            
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- List of Cards-->
+    <lightning:card>
+        <div class="slds-scrollable_y">
+            <div class="slds-grid ">
+                <div class="slds-col slds-p-around_large">
+                    <ul class="slds-list_vertical slds-has-dividers_top-space">
+                        <aura:iteration items="{!v.contacts}" var="contactInfo">
+                            <div class="slds-col slds-size_12-of-12 slds-p-bottom_medium">                     
+                                <c:DoctorInfoCard contact="{!contactInfo}"/>
+                            </div>
+                        </aura:iteration>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal-->
+        <aura:if isTrue="{!v.isOpen}">
+            <c:ModalForDoctorComp contact="{!v.selectedContact}" isOpen="{!v.isOpen}"/>
+        </aura:if>
+        
+        <lightning:spinner aura:id="spinner" variant="brand" size="large"/>
+    </lightning:card>
+</aura:component>
